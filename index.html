@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tomas Santos — Frontend Developer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-line"></div>
+      <div class="preloader-text">
+        <span class="preloader-letter">T</span>
+        <span class="preloader-letter">O</span>
+        <span class="preloader-letter">M</span>
+        <span class="preloader-letter">A</span>
+        <span class="preloader-letter">S</span>
+      </div>
+      <div class="preloader-counter" id="preloaderCounter">0</div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo">
+      <a href="#hero">TS<span class="nav-logo-dot">.</span></a>
+    </div>
+    <div class="nav-links">
+      <a href="#about" class="nav-link" data-index="01">About</a>
+      <a href="#skills" class="nav-link" data-index="02">Skills</a>
+      <a href="#experience" class="nav-link" data-index="03">Experience</a>
+      <a href="#highlights" class="nav-link" data-index="04">Highlights</a>
+      <a href="#projects" class="nav-link" data-index="05">Projects</a>
+      <a href="#contact" class="nav-link" data-index="06">Contact</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+    <div class="nav-hamburger" id="navHamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-links">
+      <a href="#about" class="mobile-menu-link">About</a>
+      <a href="#skills" class="mobile-menu-link">Skills</a>
+      <a href="#experience" class="mobile-menu-link">Experience</a>
+      <a href="#highlights" class="mobile-menu-link">Highlights</a>
+      <a href="#projects" class="mobile-menu-link">Projects</a>
+      <a href="#contact" class="mobile-menu-link">Contact</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <canvas class="hero-particles" id="heroParticles"></canvas>
+
+    <div class="hero-bg-lines">
+      <div class="hero-bg-line"></div>
+      <div class="hero-bg-line"></div>
+      <div class="hero-bg-line"></div>
+      <div class="hero-bg-line"></div>
+      <div class="hero-bg-line"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="hero-tag-line"></span>
+        <span class="hero-tag-text">Frontend Developer & UI/UX Lead</span>
+      </div>
+
+      <h1 class="hero-title">
+        <div class="hero-title-line">
+          <span class="hero-title-word">Crafting</span>
+        </div>
+        <div class="hero-title-line">
+          <span class="hero-title-word">Digital</span>
+          <span class="hero-title-word hero-title-outline">Experiences</span>
+        </div>
+      </h1>
+
+      <p class="hero-description">
+        I blend technical precision with creative expression to deliver high-performance, visually polished applications that are a pleasure to use.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">
+          <span class="btn-text">Get in Touch</span>
+          <span class="btn-icon">→</span>
+        </a>
+        <a href="CV.pdf" download class="btn btn-secondary">
+          <span class="btn-text">Download CV</span>
+          <span class="btn-icon">↓</span>
+        </a>
+      </div>
+
+      <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        <span class="hero-scroll-text">Scroll to explore</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-index">01</span>
+        <h2 class="section-title">
+          <span class="section-title-word">About</span>
+          <span class="section-title-word">Me</span>
+        </h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="about-content">
+        <div class="about-text">
+          <p class="about-paragraph reveal-text">
+            I'm <strong>Tomas Santos</strong>, a Frontend Developer specialising in React, blending technical precision with creative expression to deliver high-performance, visually polished applications.
+          </p>
+          <p class="about-paragraph reveal-text">
+            Trusted as a lead to translate vague requirements into robust, client-ready features, I take pride in making interfaces not just functional, but a pleasure to use. I thrive in guiding technical decisions, mentoring teammates, and shaping the frontend roadmap for scalability and aesthetic consistency.
+          </p>
+          <p class="about-paragraph reveal-text">
+            Specialised in perceived performance through meticulously crafted CSS transitions and animations — with a consistent focus on test coverage and engineering quality.
+          </p>
+        </div>
+
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-number-wrap">
+              <span class="stat-number" style="--target: 3;"></span>
+              <span class="stat-suffix">+</span>
+            </div>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number-wrap">
+              <span class="stat-number" style="--target: 8;"></span>
+            </div>
+            <span class="stat-label">Club Locations Served</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number-wrap">
+              <span class="stat-number" style="--target: 3;"></span>
+            </div>
+            <span class="stat-label">Major Events</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="section skills" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-index">02</span>
+        <h2 class="section-title">
+          <span class="section-title-word">Technical</span>
+          <span class="section-title-word">Expertise</span>
+        </h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3 class="skill-category-title">Core Stack</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Next.js</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Redux</span>
+            <span class="skill-tag">JavaScript (ES6+)</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3 class="skill-category-title">UI/UX & Design</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML</span>
+            <span class="skill-tag">CSS</span>
+            <span class="skill-tag">CSS Animations</span>
+            <span class="skill-tag">Responsive Design</span>
+            <span class="skill-tag">Fluid Layouts</span>
+            <span class="skill-tag">Smooth Transitions</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3 class="skill-category-title">Testing</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Jest</span>
+            <span class="skill-tag">Vitest</span>
+            <span class="skill-tag">React Testing Library</span>
+            <span class="skill-tag">Unit Testing</span>
+            <span class="skill-tag">Integration Testing</span>
+            <span class="skill-tag">Component Testing</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3 class="skill-category-title">DevOps & Tooling</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">GitHub Actions</span>
+            <span class="skill-tag">CI/CD</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Vite</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Firebase</span>
+            <span class="skill-tag">Supabase</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3 class="skill-category-title">Animations & Polish</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">CSS Transitions</span>
+            <span class="skill-tag">GSAP</span>
+            <span class="skill-tag">Perceived Performance</span>
+            <span class="skill-tag">Micro-interactions</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3 class="skill-category-title">Integrations</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Keycloak</span>
+            <span class="skill-tag">WebSockets</span>
+            <span class="skill-tag">CalDAV</span>
+            <span class="skill-tag">REST APIs</span>
+            <span class="skill-tag">Mapbox GL JS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section class="section experience" id="experience">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-index">03</span>
+        <h2 class="section-title">
+          <span class="section-title-word">Professional</span>
+          <span class="section-title-word">Experience</span>
+        </h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="experience-timeline">
+        <div class="timeline-line"></div>
+
+        <div class="experience-item">
+          <div class="experience-dot"></div>
+          <div class="experience-date">Dec 2023 — Present</div>
+          <div class="experience-card">
+            <div class="experience-card-header">
+              <h3 class="experience-role">Frontend Lead & UI/UX Decision Maker</h3>
+              <span class="experience-company">Bhout Project</span>
+              <span class="experience-duration">3 Years</span>
+            </div>
+            <ul class="experience-list">
+              <li>Grew from sole frontend developer into technical and creative lead, owning the full frontend roadmap, UI/UX process, and engineering culture.</li>
+              <li>Built and maintain a React/Vite back-office dashboard managing content for <strong>tens of thousands of users</strong> across <strong>8 club locations</strong> — handling events, personal coaching scheduling, and game management.</li>
+              <li>Rewrote the main product website as a Next.js webapp integration, improving performance and scalability.</li>
+              <li>Developed an interactive real-time leaderboard system via WebSockets, used at <strong>VivaTech</strong>, <strong>Web Summit</strong>, and the <strong>Jake Paul vs. Mike Tyson</strong> event — with hundreds to thousands of concurrent participants.</li>
+              <li>Built complex, globally compatible tools including a CalDAV calendar integration, a routine builder, and a team creation tool with dynamic logo generation.</li>
+              <li>Led technical interviews, hired and grew the frontend team, and actively mentor teammates on best practices and architectural decisions.</li>
+              <li>Delivered stable, scalable applications using TypeScript and Redux, with a consistent focus on test coverage and perceived performance through refined animations.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlights Section -->
+  <section class="section highlights" id="highlights">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-index">04</span>
+        <h2 class="section-title">
+          <span class="section-title-word">Career</span>
+          <span class="section-title-word">Highlights</span>
+        </h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="highlight-title">VivaTech & Web Summit</h3>
+          <p class="highlight-text">Built and deployed interactive real-time leaderboard systems with hundreds to thousands of concurrent participants at major international tech conferences.</p>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3 class="highlight-title">Jake Paul vs. Mike Tyson</h3>
+          <p class="highlight-text">Delivered real-time combat feedback system via WebSockets for a globally watched boxing event with thousands of concurrent participants.</p>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="highlight-title">Team Builder</h3>
+          <p class="highlight-text">Grew from sole developer to frontend lead — hiring, mentoring teammates on best practices, and shaping the technical roadmap and engineering culture.</p>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3 class="highlight-title">Tens of Thousands of Users</h3>
+          <p class="highlight-text">Built and maintain a dashboard managing content across 8 club locations — handling events, coaching scheduling, and game management at scale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="section projects" id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-index">05</span>
+        <h2 class="section-title">
+          <span class="section-title-word">Projects</span>
+        </h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+            </svg>
+          </div>
+          <h3 class="highlight-title">Personal Portfolio & Side Projects</h3>
+          <p class="highlight-text">Open-source projects and personal portfolio deployed with GitHub Actions CI/CD pipelines.</p>
+          <a href="https://github.com/tomasgsantos" target="_blank" rel="noopener noreferrer" class="highlight-link">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-index">06</span>
+        <h2 class="section-title">
+          <span class="section-title-word">Let's</span>
+          <span class="section-title-word">Connect</span>
+        </h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="contact-content">
+        <p class="contact-text reveal-text">
+          Interested in working together or just want to say hello? I'd love to hear from you.
+        </p>
+
+        <div class="contact-links">
+          <a href="mailto:tomasgsantos@gmail.com" class="contact-link">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">tomasgsantos@gmail.com</span>
+            <span class="contact-link-arrow">→</span>
+          </a>
+          <a href="tel:+351965373103" class="contact-link">
+            <span class="contact-link-label">Phone</span>
+            <span class="contact-link-value">+351 965 373 103</span>
+            <span class="contact-link-arrow">→</span>
+          </a>
+          <a href="https://linkedin.com/in/tomas-santos-53b135270/" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">tomas-santos</span>
+            <span class="contact-link-arrow">→</span>
+          </a>
+          <a href="https://github.com/tomasgsantos" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <span class="contact-link-label">GitHub</span>
+            <span class="contact-link-value">tomasgsantos</span>
+            <span class="contact-link-arrow">→</span>
+          </a>
+        </div>
+
+        <div class="contact-cta">
+          <a href="CV.pdf" download class="btn btn-primary btn-large">
+            <span class="btn-text">Download My Resume</span>
+            <span class="btn-icon">↓</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <span class="footer-name">Tomas Santos</span>
+        <span class="footer-year">© 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
