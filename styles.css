@@ -1116,13 +1116,18 @@ img {
   }
 
   .theme-toggle {
-    order: 1;
+    margin: 0 1rem 0 auto;
   }
 }
 
 @media (max-width: 480px) {
   .about-stats {
     grid-template-columns: 1fr;
+  }
+
+  .hero-title-line {
+    flex-wrap: wrap;
+    gap: 0;
   }
 
   .hero-cta {
