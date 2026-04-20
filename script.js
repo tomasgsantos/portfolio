@@ -41,19 +41,38 @@ gsap.registerPlugin(ScrollTrigger);
 (function () {
   const hero = document.getElementById('hero');
   const canvas = document.getElementById('heroParticles');
+
+  const canInteract = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!canInteract || prefersReducedMotion) {
+    canvas.style.display = 'none';
+    return;
+  }
+
   const ctx = canvas.getContext('2d');
 
   let W, H, dots;
   let mouse = { x: -9999, y: -9999 };
   let isDragging = false;
+  let isDark = ThemeManager.isDark();
+  let rafId = null;
+  let running = false;
 
   const COLS_BASE = 40;
   const RADIUS = 140;
+  const RADIUS_SQ = RADIUS * RADIUS;
   const REPULSE_STRENGTH = 6;
   const GRAB_STRENGTH = 4;
   const SPRING = 0.055;
   const DAMPING = 0.88;
   const DOT_SIZE = 3;
+  const REST_EPSILON = 0.05;
+  const TAU = Math.PI * 2;
+
+  function idleColor() {
+    return isDark ? 'rgba(82,183,136,0.15)' : 'rgba(45,106,79,0.15)';
+  }
 
   function resize() {
     W = hero.clientWidth;
@@ -81,75 +100,106 @@ gsap.registerPlugin(ScrollTrigger);
 
   function getColor(dist) {
     const t = Math.max(0, 1 - dist / RADIUS);
-    const dark = ThemeManager.isDark();
     if (isDragging) {
-      if (dark) {
-        const r = Math.round(82 + t * 67);
-        const g = Math.round(183 + t * 30);
-        const b = Math.round(136 - t * 10);
+      if (isDark) {
+        const r = 82 + ((t * 67) | 0);
+        const g = 183 + ((t * 30) | 0);
+        const b = 136 - ((t * 10) | 0);
         return `rgba(${r},${g},${b},${0.35 + t * 0.55})`;
       }
-      const r = Math.round(40 + t * 42);
-      const g = Math.round(145 + t * 38);
-      const b = Math.round(108 - t * 30);
+      const r = 40 + ((t * 42) | 0);
+      const g = 145 + ((t * 38) | 0);
+      const b = 108 - ((t * 30) | 0);
       return `rgba(${r},${g},${b},${0.35 + t * 0.55})`;
     }
-    if (dark) {
-      const r = Math.round(82 + t * 67);
-      const g = Math.round(183 + t * 30);
-      const b = Math.round(136 + t * 40);
+    if (isDark) {
+      const r = 82 + ((t * 67) | 0);
+      const g = 183 + ((t * 30) | 0);
+      const b = 136 + ((t * 40) | 0);
       return `rgba(${r},${g},${b},${0.3 + t * 0.6})`;
     }
-    const r = Math.round(45 + t * 37);
-    const g = Math.round(106 + t * 77);
-    const b = Math.round(79 + t * 57);
+    const r = 45 + ((t * 37) | 0);
+    const g = 106 + ((t * 77) | 0);
+    const b = 79 + ((t * 57) | 0);
     return `rgba(${r},${g},${b},${0.3 + t * 0.6})`;
   }
 
+  const activeDots = [];
+
   function tick() {
+    if (!running) { rafId = null; return; }
     ctx.clearRect(0, 0, W, H);
 
-    for (const p of dots) {
-      const dx = mouse.x - p.x;
-      const dy = mouse.y - p.y;
-      const distSq = dx * dx + dy * dy;
-      const dist = Math.sqrt(distSq);
+    const mx = mouse.x, my = mouse.y;
+    const mouseActive = mx > -1000;
 
-      if (dist < RADIUS && dist > 0.5) {
-        const norm = dist / RADIUS;
-        const force = (1 - norm) * (1 - norm);
+    ctx.fillStyle = idleColor();
+    ctx.beginPath();
+    activeDots.length = 0;
 
-        if (!isDragging) {
-          p.vx -= (dx / dist) * force * REPULSE_STRENGTH;
-          p.vy -= (dy / dist) * force * REPULSE_STRENGTH;
-        } else {
-          p.vx += (dx / dist) * force * GRAB_STRENGTH;
-          p.vy += (dy / dist) * force * GRAB_STRENGTH;
+    for (let i = 0; i < dots.length; i++) {
+      const p = dots[i];
+      let dist = 0;
+      let inRange = false;
+
+      if (mouseActive) {
+        const dx = mx - p.x;
+        const dy = my - p.y;
+        const distSq = dx * dx + dy * dy;
+        if (distSq < RADIUS_SQ && distSq > 0.25) {
+          dist = Math.sqrt(distSq);
+          inRange = true;
+          const norm = dist / RADIUS;
+          const force = (1 - norm) * (1 - norm);
+          const sign = isDragging ? 1 : -1;
+          const strength = isDragging ? GRAB_STRENGTH : REPULSE_STRENGTH;
+          p.vx += sign * (dx / dist) * force * strength;
+          p.vy += sign * (dy / dist) * force * strength;
         }
       }
 
-      p.vx += (p.ox - p.x) * SPRING;
-      p.vy += (p.oy - p.y) * SPRING;
-      p.vx *= DAMPING;
-      p.vy *= DAMPING;
-      p.x += p.vx;
-      p.y += p.vy;
+      const sx = p.ox - p.x;
+      const sy = p.oy - p.y;
+      if (inRange || Math.abs(p.vx) > REST_EPSILON || Math.abs(p.vy) > REST_EPSILON
+          || Math.abs(sx) > REST_EPSILON || Math.abs(sy) > REST_EPSILON) {
+        p.vx = (p.vx + sx * SPRING) * DAMPING;
+        p.vy = (p.vy + sy * SPRING) * DAMPING;
+        p.x += p.vx;
+        p.y += p.vy;
+      }
 
-      const inRange = dist < RADIUS;
+      if (inRange) {
+        activeDots.push(p, dist);
+      } else {
+        ctx.moveTo(p.x + DOT_SIZE, p.y);
+        ctx.arc(p.x, p.y, DOT_SIZE, 0, TAU);
+      }
+    }
+    ctx.fill();
+
+    for (let i = 0; i < activeDots.length; i += 2) {
+      const p = activeDots[i];
+      ctx.fillStyle = getColor(activeDots[i + 1]);
       ctx.beginPath();
-      ctx.arc(p.x, p.y, DOT_SIZE, 0, Math.PI * 2);
-      ctx.fillStyle = inRange ? getColor(dist) : (ThemeManager.isDark() ? 'rgba(82,183,136,0.15)' : 'rgba(45,106,79,0.15)');
+      ctx.arc(p.x, p.y, DOT_SIZE, 0, TAU);
       ctx.fill();
     }
 
-    requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function stop() {
+    running = false;
   }
 
   function getPos(e) {
     const rect = canvas.getBoundingClientRect();
-    if (e.touches) {
-      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-    }
     return { x: e.clientX - rect.left, y: e.clientY - rect.top };
   }
 
@@ -158,13 +208,25 @@ gsap.registerPlugin(ScrollTrigger);
   hero.addEventListener('mousedown', () => { isDragging = true; });
   hero.addEventListener('mouseup', () => { isDragging = false; });
 
-  hero.addEventListener('touchmove', e => { const p = getPos(e); mouse.x = p.x; mouse.y = p.y; }, { passive: true });
-  hero.addEventListener('touchstart', e => { isDragging = true; const p = getPos(e); mouse.x = p.x; mouse.y = p.y; });
-  hero.addEventListener('touchend', () => { isDragging = false; mouse.x = -9999; mouse.y = -9999; });
-
+  window.addEventListener('themechange', () => { isDark = ThemeManager.isDark(); });
   window.addEventListener('resize', resize);
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) start();
+        else stop();
+      }
+    }).observe(hero);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else start();
+  });
+
   resize();
-  tick();
+  start();
 })();
 
 /* ============================================
@@ -333,8 +395,12 @@ function initScrollAnimations() {
     });
   });
 
-  // Stat cards — CSS counter animation via @property
+  // Stat cards — JS-driven number count (works everywhere, incl. mobile Safari)
   document.querySelectorAll('.stat-card').forEach((card, i) => {
+    const numEl = card.querySelector('.stat-number');
+    const target = parseInt(numEl.dataset.target, 10) || 0;
+    const counter = { val: 0 };
+
     gsap.to(card, {
       opacity: 1,
       y: 0,
@@ -346,8 +412,19 @@ function initScrollAnimations() {
         trigger: card,
         start: 'top 85%',
         toggleActions: 'play none none reverse',
-        onEnter: () => card.querySelector('.stat-number').classList.add('counting'),
-        onLeaveBack: () => card.querySelector('.stat-number').classList.remove('counting'),
+        onEnter: () => {
+          gsap.to(counter, {
+            val: target,
+            duration: 1.5,
+            ease: 'power2.out',
+            onUpdate: () => { numEl.textContent = Math.round(counter.val); },
+          });
+        },
+        onLeaveBack: () => {
+          gsap.killTweensOf(counter);
+          counter.val = 0;
+          numEl.textContent = '0';
+        },
       },
     });
   });

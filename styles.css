@@ -584,29 +584,12 @@ img {
   gap: 0.1em;
 }
 
-@property --num {
-  syntax: "<integer>";
-  initial-value: 0;
-  inherits: false;
-}
-
 .stat-number {
   font-family: var(--font-primary);
   font-size: 3rem;
   font-weight: 800;
   color: var(--primary);
   line-height: 1;
-  --num: 0;
-  counter-reset: stat var(--num);
-  transition: --num 1.5s ease-out;
-}
-
-.stat-number::after {
-  content: counter(stat);
-}
-
-.stat-number.counting {
-  --num: var(--target);
 }
 
 .stat-suffix {
@@ -1117,6 +1100,14 @@ img {
 
   .theme-toggle {
     margin: 0 1rem 0 auto;
+  }
+
+  .stat-card,
+  .skill-category,
+  .experience-card,
+  .highlight-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
