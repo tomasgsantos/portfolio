@@ -331,14 +331,14 @@ function initPageAnimations() {
 
   heroTl
     .to('#nav', { opacity: 1, duration: 0.6 })
-    .to('.hero-tag-line', { scaleX: 1, duration: 0.5, transformOrigin: 'left' }, '-=0.3')
-    .to('.hero-tag-text', { opacity: 1, x: 0, duration: 0.5 }, '-=0.2')
     .to('.hero-title-word', {
       y: 0,
       duration: 0.8,
       stagger: 0.1,
       ease: 'power4.out'
     }, '-=0.3')
+    .to('.hero-tag-line', { scaleX: 1, duration: 0.5, transformOrigin: 'left' }, '-=0.3')
+    .to('.hero-tag-text', { opacity: 1, x: 0, duration: 0.5 }, '-=0.2')
     .to('.hero-description', { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
     .to('.hero-cta', { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
     .to('.hero-scroll', { opacity: 1, duration: 0.5 }, '-=0.3');
