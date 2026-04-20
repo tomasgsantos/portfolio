@@ -47,7 +47,7 @@ gsap.registerPlugin(ScrollTrigger);
   let mouse = { x: -9999, y: -9999 };
   let isDragging = false;
 
-  const COLS_BASE = 50;
+  const COLS_BASE = 40;
   const RADIUS = 140;
   const REPULSE_STRENGTH = 6;
   const GRAB_STRENGTH = 4;
@@ -57,7 +57,7 @@ gsap.registerPlugin(ScrollTrigger);
 
   function resize() {
     W = hero.clientWidth;
-    H = hero.clientHeight;
+    H = canvas.clientHeight;
     canvas.width = W;
     canvas.height = H;
     initDots();
@@ -158,7 +158,7 @@ gsap.registerPlugin(ScrollTrigger);
   hero.addEventListener('mousedown', () => { isDragging = true; });
   hero.addEventListener('mouseup', () => { isDragging = false; });
 
-  hero.addEventListener('touchmove', e => { e.preventDefault(); const p = getPos(e); mouse.x = p.x; mouse.y = p.y; }, { passive: false });
+  hero.addEventListener('touchmove', e => { const p = getPos(e); mouse.x = p.x; mouse.y = p.y; }, { passive: true });
   hero.addEventListener('touchstart', e => { isDragging = true; const p = getPos(e); mouse.x = p.x; mouse.y = p.y; });
   hero.addEventListener('touchend', () => { isDragging = false; mouse.x = -9999; mouse.y = -9999; });
 

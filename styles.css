@@ -356,7 +356,7 @@ img {
   font-family: var(--font-primary);
   font-size: clamp(3rem, 8vw, 7rem);
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.2;
   letter-spacing: -0.03em;
   color: var(--primary-dark);
   margin-bottom: 2rem;
@@ -1125,9 +1125,17 @@ img {
     grid-template-columns: 1fr;
   }
 
-  .hero-title-line {
-    flex-wrap: wrap;
-    gap: 0;
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .hero-particles {
+    inset: auto;
+    left: 0;
+    right: 0;
+    top: 48%;
+    transform: translateY(-50%);
+    height: 500px;
   }
 
   .hero-cta {
