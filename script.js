@@ -456,40 +456,26 @@ function initScrollAnimations() {
     }, '-=0.2');
   });
 
-  // Timeline line
-  gsap.to('.timeline-line', {
-    scaleY: 1,
-    duration: 1.5,
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: '.experience-timeline',
-      start: 'top 80%',
-      toggleActions: 'play none none reverse',
-    }
-  });
-
-  // Experience items
-  document.querySelectorAll('.experience-item').forEach(item => {
-    const tl = gsap.timeline({
+  // Projects carousel reveal
+  const carouselEl = document.getElementById('projectsCarousel');
+  if (carouselEl) {
+    gsap.fromTo(carouselEl, {
+      opacity: 0,
+      y: 40
+    }, {
+      opacity: 1,
+      y: 0,
+      duration: 0.9,
+      ease: 'power3.out',
       scrollTrigger: {
-        trigger: item,
+        trigger: carouselEl,
         start: 'top 80%',
         toggleActions: 'play none none reverse',
       }
     });
 
-    tl.to(item, {
-      opacity: 1,
-      x: 0,
-      duration: 0.7,
-      ease: 'power3.out'
-    })
-    .to(item.querySelector('.experience-dot'), {
-      scale: 1,
-      duration: 0.4,
-      ease: 'back.out(2)'
-    }, '-=0.3');
-  });
+    initProjectsCarousel(carouselEl);
+  }
 
   // Highlight cards
   document.querySelectorAll('.highlight-card').forEach((card, i) => {
@@ -625,3 +611,53 @@ ScrollTrigger.create({
 document.getElementById('themeToggle').addEventListener('click', () => {
   ThemeManager.toggle();
 });
+
+/* ============================================
+   Projects Carousel
+   ============================================ */
+function initProjectsCarousel(root) {
+  const track = root.querySelector('#carouselTrack');
+  const cards = Array.from(track.querySelectorAll('.project-card'));
+  const prevBtn = root.querySelector('#carouselPrev');
+  const nextBtn = root.querySelector('#carouselNext');
+  const dots = Array.from(root.querySelectorAll('.carousel-dot'));
+  const total = cards.length;
+
+  let index = 0;
+
+  function go(to) {
+    index = (to + total) % total;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
+      dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+    });
+  }
+
+  prevBtn.addEventListener('click', () => go(index - 1));
+  nextBtn.addEventListener('click', () => go(index + 1));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => go(i)));
+
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(index - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); }
+  });
+  root.tabIndex = 0;
+
+  let touchStartX = 0;
+  let touchDeltaX = 0;
+  track.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchDeltaX = 0;
+  }, { passive: true });
+  track.addEventListener('touchmove', (e) => {
+    touchDeltaX = e.touches[0].clientX - touchStartX;
+  }, { passive: true });
+  track.addEventListener('touchend', () => {
+    if (Math.abs(touchDeltaX) > 50) {
+      go(index + (touchDeltaX < 0 ? 1 : -1));
+    }
+  });
+
+  go(0);
+}
