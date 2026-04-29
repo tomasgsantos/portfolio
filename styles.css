@@ -894,15 +894,6 @@ img {
   overflow: hidden;
 }
 
-.highlight-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(82, 183, 136, 0.05), transparent);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
 .highlight-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 25px 50px var(--card-shadow);
